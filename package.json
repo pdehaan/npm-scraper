@@ -1,0 +1,15 @@
+{
+  "name": "npm-scraper",
+  "version": "1.0.0",
+  "author": "Peter deHaan <peter@deseloper.com> (https://about.me/peterdehaan)",
+  "dependencies": {
+    "get-package-json": "1.0.0",
+    "node-fetch": "1.6.0"
+  },
+  "keywords": [],
+  "license": "WTFPL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
