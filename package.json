@@ -1,15 +1,23 @@
 {
   "name": "npm-scraper",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "Peter deHaan <peter@deseloper.com> (https://about.me/peterdehaan)",
+  "bin": {
+    "npm-scraper": "bin/cli.js"
+  },
   "dependencies": {
     "get-package-json": "1.0.0",
-    "node-fetch": "1.6.0"
+    "git-url-parse": "6.0.5",
+    "node-fetch": "1.6.0",
+    "sort-json": "1.3.0",
+    "yargs": "5.0.0"
   },
   "keywords": [],
   "license": "WTFPL",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "api": "node test",
+    "cli": "./bin/cli.js -n path",
+    "test": "npm run api"
   }
 }
