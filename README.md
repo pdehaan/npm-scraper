@@ -1,18 +1,42 @@
 # npm-scraper
 
-Scrape npm registry for module dependencies.
+Currently this repo isn't very useful, but the basic gist is that you can scrape npm's registry for modules which depend on a specified module.
+
+## Installation:
+
+This module isn't published on npm (because it's lame), but if you really want it, you can install directly from GitHub using something like:
+
+```sh
+$ npm i pdehaan/npm-scraper -S
+```
 
 ## Usage:
 
-Currently this repo isn't very useful (or extensible), but the basic gist is that you can scrape npm's registry for modules which depend on a specified module.
+### API:
 
 For example, if you want to see a roughly accurate list of all npm modules which depend on a confusingly named [**fs**](http://npm.im/fs) module, you'd so something like:
 
 ```js
 scraper('fs')
-  .then((stuff) => things)
-  .catch((err) => console.error(err));
+  // Ignore modules that don't specify a repository, because they are bad citizens.
+  .then((data) => data.filter(({repository}) => !!repository))
+  .then((data) => console.log(JSON.stringify(data, null, 2)))
+  .catch(console.error);
 ```
+
+### CLI:
+
+You can also install this module globally, or simply install it locally and add the `npm-scraper` script and specify your module name using the `-n {name}` flag:
+
+```json
+"scripts": {
+  "api": "node test",
+  "cli": "npm-scraper -n path",
+  "test": "npm run api"
+}
+```
+
+## Output:
 
 Currently if you run `$ node test`, the output looks roughly like this:
 
