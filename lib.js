@@ -1,31 +1,13 @@
-const url = require('url');
-
-const fetch = require('node-fetch');
 const getPackageJson = require('get-package-json');
 const gitUrlParse = require('git-url-parse');
+const { dependedUpon } = require('npm-depended-upon');
 const sortJson = require('sort-json');
 
+// TODO: Switch to https://github.com/pdehaan/npm-depended-upon?
 function scraper(moduleName, limit=500) {
-  const dependedUponUrl = url.format({
-    protocol: 'https',
-    host: 'registry.npmjs.org/-/_view/dependedUpon',
-    query: {
-      group_level: 3,
-      startkey: `["${moduleName}"]`,
-      endkey: `["${moduleName}",{}]`,
-      skip: 0,
-      limit
-    }
-  });
-  return fetch(dependedUponUrl)
-    .then((res) => res.json())
-    .then(({rows}) => {
-      const dependents = rows.reduce((prev, {key:[mod, name, desc]}) => {
-        prev.push(name);
-        return prev;
-      }, []);
-      return Promise.all(dependents.map(getLatestPackageJson));
-    })
+  return dependedUpon(moduleName, {limit: 500})
+    .then((dependents) => dependents.map(getLatestPackageJson))
+    .then((dependents) => Promise.all(dependents))
     .then((dependents) => {
       // Sort all the modules by last published date descending (newest on top).
       const sortModifiedDesc = (pkgA, pkgB) => new Date(pkgB.modified) - new Date(pkgA.modified);
