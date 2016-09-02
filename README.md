@@ -1,6 +1,8 @@
 # npm-scraper
 
-Currently this repo isn't very useful, but the basic gist is that you can scrape npm's registry for modules which depend on a specified module.
+## Why?
+
+Because you want to scrape npm's registry for modules which depend on a specified module. For example, get a list of all modules that depend on the `request` module, and return their package.json from their latest published module in npm.
 
 ## Installation:
 
@@ -69,7 +71,5 @@ Currently if you run `$ node test`, the output looks roughly like this:
   ...
 ]
 ```
-
-There's also a buried `getLatestPackageJson()` method which will get the specified module's latest package.json file from the npm registry as well, so you can scan the latest `dependencies` and `devDependencies` or whatever your deal is.
 
 Like I say, probably not very useful to anybody else, but I seemingly end up rewriting this code every 6 months when I want to scan all npm modules which are depending on vulnerable versions of modules reported via the exceptionally awesome folks behind https://nodesecurity.io/advisories.
