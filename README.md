@@ -45,28 +45,32 @@ Currently if you run `$ node test`, the output looks roughly like this:
 ```js
 [
   {
+    "name": "djms",
+    "version": "0.1.0",
+    "description": "media file response",
+    "repository": "https://github.com/odj0220/djms",
     "dependencies": {
-      "diacritics": "^1.2.3",
+      "btoa": "^1.1.2",
       "fs": "0.0.2",
-      "fuzzaldrin": "^2.1.0",
-      "keyword-extractor": "0.0.12",
-      "os": "^0.1.1",
-      "path": "^0.12.7",
-      "sync-request": "^3.0.1"
+      "jsmediatags": "^3.2.1"
     },
-    "devDependencies": {
-      "chai": "^3.5.0",
-      "coveralls": "^2.11.9",
-      "eslint": "^2.10.2",
-      "eslint-config-google": "^0.5.0",
-      "istanbul": "^0.4.3",
-      "mocha": "^2.4.5",
-      "mocha-lcov-reporter": "^1.2.0"
+    "devDependencies": {},
+    "created": "2016-09-01T07:05:36.161Z",
+    "modified": "2016-09-01T07:05:36.161Z"
+  },
+  {
+    "name": "djfileio",
+    "version": "0.1.3",
+    "description": "node file IO controll module",
+    "repository": "https://github.com/odj0220/djfileio",
+    "dependencies": {
+      "formidable": "^1.0.17",
+      "fs": "0.0.2",
+      "mongodb": "^2.2.5"
     },
-    "modified": "2016-08-26T16:57:57.904Z",
-    "name": "hylla",
-    "repository": "https://github.com/tpoisot/hylla",
-    "version": "0.0.6"
+    "devDependencies": {},
+    "created": "2016-08-24T04:11:36.991Z",
+    "modified": "2016-08-31T05:20:43.733Z"
   },
   ...
 ]
