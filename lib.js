@@ -1,50 +1,35 @@
-const getPackageJson = require('get-package-json');
-const gitUrlParse = require('git-url-parse');
 const { dependedUpon } = require('npm-depended-upon');
-const sortJson = require('sort-json');
+const nicePackage = require('fetch-nice-package');
 
-// TODO: Switch to https://github.com/pdehaan/npm-depended-upon?
-function scraper(moduleName, limit=500) {
-  return dependedUpon(moduleName, {limit: 500})
-    .then((dependents) => dependents.map(getLatestPackageJson))
-    .then((dependents) => Promise.all(dependents))
-    .then((dependents) => {
-      // Sort all the modules by last published date descending (newest on top).
-      const sortModifiedDesc = (pkgA, pkgB) => new Date(pkgB.modified) - new Date(pkgA.modified);
-      return dependents.sort(sortModifiedDesc);
-    });
+function sortModifiedDesc(pkgA, pkgB) {
+  return new Date(pkgB.modified) - new Date(pkgA.modified);
 }
 
-function getLatestPackageJson(name) {
-  return getPackageJson(name)
-    .then(({pkg}) => {
-      const latestVer = pkg['dist-tags'].latest;
-      const latestPkg = pkg.versions[latestVer];
-      latestPkg.modified = pkg.time.modified; // inject modified date.
-      return latestPkg;
-    })
-    .then(({name, version, repository=null, dependencies={}, devDependencies={}, modified}) => {
-      const fixRepository = (repo) => {
-        if (repo && repo.url) {
-          return gitUrlParse(repo.url).toString('https') || repo.url;
-        }
-        // Something is wrong with the repository in package.json. Give up.
-        return null;
-      };
-      repository = fixRepository(repository);
+function scraper(moduleName, limit=500) {
+  return dependedUpon(moduleName, {limit})
+    .then((dependents) => dependents.map((name) => getPackageJson(name)))
+    .then((dependents) => Promise.all(dependents))
+    .then((dependents) => dependents.sort(sortModifiedDesc));
+}
 
-      return sortJson({
-        name,
-        version,
-        repository,
-        modified,
-        dependencies,
-        devDependencies
-      })
+function getPackageJson(name) {
+  return nicePackage(name)
+    .then((pkg) => {
+      // Return a subset of the package.json keys.
+      return {
+        name: pkg.name,
+        version: pkg.version,
+        description: pkg.description,
+        repository: pkg.repository && pkg.repository.https_url || pkg.repository,
+        dependencies: pkg.dependencies || {},
+        devDependencies: pkg.devDependencies || {},
+        peerDependencies: pkg.peerDependencies,
+        created: pkg.created,
+        modified: pkg.modified
+      };
     });
 }
 
 module.exports = {
-  getLatestPackageJson,
   scraper
 };

@@ -1,20 +1,28 @@
 {
   "name": "npm-scraper",
-  "version": "2.0.0",
+  "description": "Scrape npm for module dependencies.",
+  "version": "3.0.0",
   "author": "Peter deHaan <peter@deseloper.com> (https://about.me/peterdehaan)",
   "bin": {
     "npm-scraper": "bin/cli.js"
   },
-  "dependencies": {
-    "get-package-json": "1.0.0",
-    "git-url-parse": "6.0.5",
-    "npm-depended-upon": "1.0.0",
-    "sort-json": "1.3.0",
-    "yargs": "5.0.0"
+  "bugs": {
+    "url": "https://github.com/pdehaan/npm-scraper/issues"
   },
+  "dependencies": {
+    "fetch-nice-package": "^1.0.1",
+    "npm-depended-upon": "^1.0.0",
+    "yargs": "^5.0.0"
+  },
+  "devDependencies": {},
+  "homepage": "https://github.com/pdehaan/npm-scraper#readme",
   "keywords": [],
   "license": "WTFPL",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pdehaan/npm-scraper.git"
+  },
   "scripts": {
     "api": "node test",
     "cli": "./bin/cli.js -n path",
